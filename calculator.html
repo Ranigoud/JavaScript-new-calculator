@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+   <head>
+    <title>Calculator Cration</title>
+     <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+    
+.container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    border-radius:8px 8px 0 0;
+    background: blue;
+    box-shadow:2px 2px 8px;
+}
+.result{
+    background: green;
+    color:white;
+    border-radius: 8px 8px 0 0;
+    padding:20px;
+    font-size:20px
+
+} 
+.buttons{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap:1px
+} 
+.row{
+    display:flex;
+    justify-content: space-around;
+    gap:1px;
+    }
+    .row button{
+        width:75px;
+        height:75px;
+        border-radius:0 0 0 0;
+        outline:none;
+        border:none;
+        font-size:20px;
+        text-align:center;
+        transition:0.2s all linear ;
+    }
+    .row button:hover{
+        background-color: blueviolet;
+    }
+    .row button:active{
+        background-color: brown;
+    }
+    #equal{
+        width:150px ;
+    }
+    #dot{
+        font-weight:600;
+    }
+    
+     </style>
+   </head>
+     <body>
+        <div class="container"> 
+
+            <div class="result">
+                <p id="result">0</p>
+            </div>
+
+            <div class="buttons">
+                <div class="row">
+                    <button>AC</button>
+                    <button>DEL</button>
+                    <button>+</button>
+                    <button>%</button>
+                </div>
+                <div class="row">
+                    <button>7</button>
+                    <button>8</button>
+                    <button>9</button>
+                    <button>/</button>
+
+                </div>
+                <div class="row">
+                    <button>4</button>
+                    <button>5</button>
+                    <button>6</button>
+                    <button>*</button>
+
+                </div>
+                <div class="row">
+                    <button>1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>-</button>
+
+                </div>
+                <div class="row">
+                    <button id="dot">.</button>
+                    <button>0</button>
+                    <button id="equal">=</button>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            
+               let result = document.getElementById("result");
+              let buttons = document.getElementsByTagName("button");
+
+            for (let i = 0; i < buttons.length; i++) 
+               {
+                  buttons[i].onclick = function () 
+                  {
+                      let input = this.innerText;
+                      updateDisplay(input);
+                     }
+               }
+
+        function updateDisplay(input) 
+        {
+               let currentDisplay = result.innerText;
+
+    
+            if (currentDisplay === '0') 
+            {
+               if (input !== 'AC' && input !== 'DEL' && input !== '=') 
+               {
+                result.innerText = input; // Replace 0 with the input value
+               }
+            } else 
+            {
+                  // (delete last character)
+                if (input === "DEL") 
+               {
+                 result.innerText = currentDisplay.substring(0, currentDisplay.length - 1);
+                 if (result.innerText === "") 
+                 {
+                   result.innerText = "0"; // If display is empty, reset to '0'
+                 }
+                }
+
+               //  (clear all)
+               if (input === "AC") 
+              {
+                 result.innerText = "0"; // Reset display to '0'
+              }
+
+       
+              if (input !== "AC" && input !== "DEL" && input !== "=") 
+              {
+                result.innerText += input; 
+              }
+
+        
+              if (input === "=") 
+              {
+                try 
+                {
+                    let display = result.innerText;
+                  result.innerText = eval(display); // Evaluate the expression
+                } catch (error) {
+                   result.innerText = "Error"; // Handle invalid expression
+               }
+              }
+           }
+       }
+    </script>
+   </body>
+   </html>
